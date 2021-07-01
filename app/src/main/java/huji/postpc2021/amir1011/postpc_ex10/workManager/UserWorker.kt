@@ -16,8 +16,9 @@ class UserWorker(context: Context, workerParams: WorkerParameters): Worker(conte
     override fun doWork(): Result {
 
         val curServerInterface: ServerInterface = ServerHolder.getServerInstance()
-        val userToken = "token " + inputData.getString("token")
+        var userToken = inputData.getString("token_key")
         return try {
+            userToken = "token $userToken"
             val response: Response<UserResponse> = curServerInterface.getUser(userToken).execute()
             val user: UserResponse = response.body() ?: return Result.failure()
             val outputData = Data.Builder()

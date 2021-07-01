@@ -19,9 +19,9 @@ class SetUserWork(context: Context, workerParams: WorkerParameters): Worker(cont
             val curServerInterface: ServerInterface = ServerHolder.getServerInstance()
             val pretty = inputData.getString("pretty_name_key")
             val imageURL = inputData.getString("image_url_key")
-            var token = inputData.getString("token_key")
+            var userToken = inputData.getString("token_key")
             return try {
-                token = "token $token"
+                userToken = "token $userToken"
                 val jObject = JsonObject()
                 if (pretty != null) {
                     jObject.addProperty("property_pretty_name", pretty)
@@ -29,7 +29,7 @@ class SetUserWork(context: Context, workerParams: WorkerParameters): Worker(cont
                     jObject.addProperty("property_image_url", imageURL)
                 }
 
-                val response: Response<UserResponse> = curServerInterface.editUser(token, jObject).execute()
+                val response: Response<UserResponse> = curServerInterface.editUser(userToken, jObject).execute()
                 val user = response.body() ?: return Result.failure()
                 val outputData = Data.Builder()
                     .putString("user_output_key", Gson().toJson(user))

@@ -24,4 +24,28 @@ interface ServerInterface {
         @Header("Authorization") token: String,
         @Body json: JsonObject
     ): Call<UserResponse>
+
+
+
+
+
+//    @GET("users/{username}/token/")
+//    fun login(@Path("username") userName: String): Call<TokenResponse>
+//
+//    @GET("user/")
+//    fun getUserInfo(@Header("Authorization") auth: String): Call<UserResponse>
+//
+//    @Headers("Content-Type: application/json")
+//    @POST("user/edit/")
+//    fun editUserPrettyName(
+//            @Header("Authorization") auth: String,
+//            @Body request: SetUserPrettyNameRequest
+//    ): Call<UserResponse>
+//
+//    @Headers("Content-Type: application/json")
+//    @POST("user/edit/")
+//    fun editUserImage(
+//            @Header("Authorization") auth: String,
+//            @Body request: SetUserImageRequest
+//    ): Call<UserResponse>
 }
