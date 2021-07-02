@@ -6,12 +6,14 @@ import android.content.SharedPreferences
 
 class ServerApplication: Application() {
 
-    private var sp: SharedPreferences? = null
-
     companion object {
         private var instance: ServerApplication? = null
+        private var sp: SharedPreferences? = null
         fun getInstance(): ServerApplication? {
             return instance
+        }
+        fun getSp(): SharedPreferences? {
+            return sp
         }
     }
 
@@ -22,7 +24,4 @@ class ServerApplication: Application() {
         sp = getSharedPreferences("local_app_db", Context.MODE_PRIVATE)
     }
 
-    fun getSp(): SharedPreferences? {
-        return sp
-    }
 }

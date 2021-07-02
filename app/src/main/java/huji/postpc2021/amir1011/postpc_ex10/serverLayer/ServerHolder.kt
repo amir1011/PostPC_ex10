@@ -1,12 +1,15 @@
 package huji.postpc2021.amir1011.postpc_ex10.serverLayer
 
 import android.app.Application
+import android.content.Context
+import android.content.SharedPreferences
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class ServerHolder: Application() {
+
 
     companion object{
         private val okHttpClient: OkHttpClient by lazy {
@@ -35,6 +38,8 @@ class ServerHolder: Application() {
         }
     }
 
-
+    fun getSP(): SharedPreferences? {
+        return getSharedPreferences("local_app_db", Context.MODE_PRIVATE)
+    }
 
 }

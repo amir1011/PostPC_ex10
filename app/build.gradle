@@ -15,12 +15,18 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
     }
 
     buildTypes {
+//        debug {
+//            buildConfigField "Boolean", "DEBUG_MODE", "true"
+//        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+//            buildConfigField "Boolean", "DEBUG_MODE", "false"
         }
     }
     compileOptions {
