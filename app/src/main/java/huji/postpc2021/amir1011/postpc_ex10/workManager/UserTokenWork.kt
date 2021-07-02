@@ -17,7 +17,7 @@ class UserTokenWork(context: Context, workerParams: WorkerParameters): Worker(co
         val curServerInterface: ServerInterface = ServerHolder.getServerInstance()
         return try {
             val response: Response<TokenResponse> = curServerInterface.
-                getUsersToken(inputData.getString("username_key")).execute()
+                getUsersToken(inputData.getString("username_key")!!).execute()
             val tokenResponse = response.body() ?: return Result.failure()
             val outputData = Data.Builder()
                 .putString("user_output_token_key", Gson().toJson(tokenResponse))

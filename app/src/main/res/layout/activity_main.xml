@@ -20,9 +20,9 @@
         android:id="@+id/userImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:minHeight="150dp"
+        android:minHeight="250dp"
         android:layout_marginTop="50dp"
-        android:minWidth="200dp"
+        android:minWidth="300dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintTop_toBottomOf="@id/userWelcome"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -64,6 +64,8 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="60dp"
         android:orientation="horizontal"
+        android:minWidth="300dp"
+        android:minHeight="100dp"
         android:padding="20dp"
         app:layout_constraintBottom_toTopOf="@+id/changeName"
         app:layout_constraintHorizontal_bias="0.496"
@@ -75,43 +77,43 @@
             android:id="@+id/image_crab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:minWidth="40dp"
-            android:minHeight="40dp" />
+            android:minWidth="60dp"
+            android:minHeight="60dp" />
 
         <ImageView
             android:id="@+id/image_unicorn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:minWidth="40dp"
-            android:minHeight="40dp" />
+            android:minWidth="60dp"
+            android:minHeight="60dp" />
 
         <ImageView
             android:id="@+id/image_alien"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:minWidth="40dp"
-            android:minHeight="40dp" />
+            android:minWidth="60dp"
+            android:minHeight="60dp" />
 
         <ImageView
             android:id="@+id/image_frog"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:minWidth="40dp"
-            android:minHeight="40dp" />
+            android:minWidth="60dp"
+            android:minHeight="60dp" />
 
         <ImageView
             android:id="@+id/image_octopus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:minWidth="40dp"
-            android:minHeight="40dp" />
+            android:minWidth="60dp"
+            android:minHeight="60dp" />
 
         <ImageView
             android:id="@+id/image_robot"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:minWidth="40dp"
-            android:minHeight="40dp" />
+            android:minWidth="60dp"
+            android:minHeight="60dp" />
     </LinearLayout>
 
     <EditText
@@ -119,7 +121,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="232dp"
+        android:layout_marginTop="320dp"
         android:layout_marginEnd="8dp"
         android:ems="10"
         android:inputType="textPersonName"

@@ -9,14 +9,14 @@ import retrofit2.http.*
 
 interface ServerInterface {
 
-    @GET("/users")
+    @GET("/users/0")
     fun connectivityCheck(): Call<UserResponse>
 
     @GET("/user/")
     fun getUser(@Header("Authorization") token: String): Call<UserResponse>
 
-    @GET("/users/{username}/token/")
-    fun getUsersToken(@Path("username") username: String?): Call<TokenResponse>
+    @GET("users/{username}/token/")
+    fun getUsersToken(@Path("username") username: String): Call<TokenResponse>
 
     @Headers("Content-Type: application/json")
     @POST("/user/edit/")

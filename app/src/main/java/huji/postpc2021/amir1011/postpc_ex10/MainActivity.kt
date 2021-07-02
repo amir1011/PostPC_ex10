@@ -34,10 +34,7 @@ class MainActivity : AppCompatActivity() {
     private var connectButton: Button? = null
     private var username: EditText? = null
     private var prettyName: TextView? = null
-    private val sp: SharedPreferences = getSharedPreferences(
-            "local_app_db",
-            Context.MODE_PRIVATE
-    )
+    private var sp: SharedPreferences? = null
 
     private enum class Actions{
         GetUser,
@@ -49,87 +46,97 @@ class MainActivity : AppCompatActivity() {
     private fun doOneTimeWorkRequest(typeOfAction: Actions, curData: String?)
     {
         val workCurrId = UUID.randomUUID().toString()
-        val currWork = OneTimeWorkRequest.Builder(UserTokenWork::class.java)
-                .setConstraints(Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build())
+        val currWork = OneTimeWorkRequest.Builder(
+            when (typeOfAction) {
+                Actions.GetUser -> UserWorker::class.java
+                Actions.GetUserToken -> UserTokenWork::class.java
+                else -> SetUserWork::class.java
+            }
+        )
+                .setConstraints(
+                    Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()
+                )
                 .setInputData(
-                        when(typeOfAction)
-                        {
-                            Actions.GetUser ->
-                                Data.Builder().putString("token_key", curToken).build()
-                            Actions.GetUserToken ->
-                                Data.Builder().putString("username_key", curData).build()
-                            Actions.UpdateImage ->
-                                Data.Builder().putString("token_key", curToken)
-                                    .putString("image_url_key", curData).build()
-                            else -> Data.Builder().putString("token_key", curToken)
-                                    .putString("image_url_key", null)
-                                    .putString("pretty_name_key", curData).build()
-                        }
-                        ).addTag(workCurrId).build()
+                    when (typeOfAction) {
+                        Actions.GetUser ->
+                            Data.Builder().putString("token_key", curToken).build()
+                        Actions.GetUserToken ->
+                            Data.Builder().putString("username_key", curData).build()
+                        Actions.UpdateImage ->
+                            Data.Builder().putString("token_key", curToken)
+                                .putString("image_url_key", curData).build()
+                        else -> Data.Builder().putString("token_key", curToken)
+                            .putString("image_url_key", null)
+                            .putString("pretty_name_key", curData).build()
+                    }
+                ).addTag(workCurrId).build()
 
         WorkManager.getInstance(applicationContext).enqueue(currWork)
         WorkManager.getInstance(applicationContext)
                 .getWorkInfosByTagLiveData(workCurrId).observe(this,
-                        { workInfoList: List<WorkInfo>? ->
-                            if (workInfoList == null || workInfoList.isEmpty()) return@observe
-                            val workInfo = workInfoList[0]
+                { workInfoList: List<WorkInfo>? ->
+                    if (workInfoList == null || workInfoList.isEmpty()) return@observe
+                    val workInfo = workInfoList[0]
 
-                            if(typeOfAction == Actions.UpdateImage
-                                    || typeOfAction == Actions.UpdateUser)
-                            {
-                                if (workInfo.state == WorkInfo.State.FAILED) {
-                                    Toast.makeText(applicationContext, "Failed updating user",
-                                            Toast.LENGTH_SHORT).show()
-                                    return@observe
-                                }
-                            }
+                    if (typeOfAction == Actions.UpdateImage
+                        || typeOfAction == Actions.UpdateUser
+                    ) {
+                        if (workInfo.state == WorkInfo.State.FAILED) {
+                            Toast.makeText(
+                                applicationContext, "Failed updating user",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            return@observe
+                        }
+                    }
 
-                            if(typeOfAction == Actions.GetUserToken)
-                            {
-                                val curTokenJson = workInfo.outputData
-                                        .getString("user_output_token_key")
-                                if (curTokenJson == null || curTokenJson == "") return@observe
+                    if (typeOfAction == Actions.GetUserToken) {
+                        val curTokenJson = workInfo.outputData
+                            .getString("user_output_token_key")
 
-                                val curResponseToken = Gson()
-                                        .fromJson(curTokenJson, TokenResponse::class.java)
+                        Log.d("ex10TagToken", "got user: $curTokenJson")
 
-                                if (curResponseToken.data == null || curResponseToken.data == "")
-                                    return@observe
+                        if (curTokenJson == null || curTokenJson == "") return@observe
 
-                                val editor = sp!!.edit()
-                                editor.putString("token_key", curResponseToken.data)
-                                editor.apply()
-                                curToken = curResponseToken.data
+                        val curResponseToken = Gson()
+                            .fromJson(curTokenJson, TokenResponse::class.java)
 
-                                username!!.visibility = View.GONE
-                                connectButton!!.visibility = View.GONE
-                                changeLoading(true)
-                                doOneTimeWorkRequest(Actions.GetUser, null)
-                            }
+                        if (curResponseToken.data == null || curResponseToken.data == "")
+                            return@observe
 
-                            else
-                            {
-                                val curResponseJson = workInfo.outputData
-                                        .getString("user_output_key")
-                                if (curResponseJson == null || curResponseJson == "") return@observe
-                                val curResponse = Gson()
-                                        .fromJson(curResponseJson, UserResponse::class.java)
+                        val editor = sp!!.edit()
+                        editor.putString("token_key", curResponseToken.data)
+                        editor.apply()
+                        curToken = curResponseToken.data
 
-                                if (curResponse == null || curResponse.data == null) return@observe
-
-                                changeLoading(false)
-                                showUserInfo(curResponse.data)
-                            }
-                        })
+                        username!!.visibility = View.GONE
+                        connectButton!!.visibility = View.GONE
+                        changeLoading(true)
+                        doOneTimeWorkRequest(Actions.GetUser, null)
+                    } else {
+                        val curResponseJson = workInfo.outputData
+                            .getString("user_output_key")
+                        if (curResponseJson == null || curResponseJson == "") return@observe
+                        val curResponse = Gson()
+                            .fromJson(curResponseJson, UserResponse::class.java)
+                        Log.d("ex10Tag", "got user: $curResponseJson")
+                        if (curResponse == null || curResponse.data == null) return@observe
+                        Log.d("ex10Tag", "got user: $curResponse")
+                        changeLoading(false)
+                        showUserInfo(curResponse.data)
+                    }
+                })
     }
 
     private fun requestInternetPermission()
     {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.INTERNET)
                 != PackageManager.PERMISSION_GRANTED)
-            ActivityCompat.requestPermissions(this,
-                    arrayOf(Manifest.permission.INTERNET),
-                    100)
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.INTERNET),
+                100
+            )
     }
 
     private fun changeLoading(toShow: Boolean) {
@@ -144,9 +151,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         requestInternetPermission()
+        sp = getSharedPreferences("local_app_db", Context.MODE_PRIVATE)
 
         //initialize UI
-
         connectButton = findViewById(R.id.connect)
         username = findViewById(R.id.username)
         prettyName = findViewById(R.id.new_name)
@@ -158,6 +165,10 @@ class MainActivity : AppCompatActivity() {
         changePretty!!.visibility = View.GONE
         welcomeText!!.visibility = View.GONE
         prettyName!!.visibility = View.GONE
+
+
+        val editor: SharedPreferences.Editor = sp!!.edit()
+        editor.clear().apply()
 
         curToken = sp!!.getString("token_key", null)
         if (curToken != null) {
