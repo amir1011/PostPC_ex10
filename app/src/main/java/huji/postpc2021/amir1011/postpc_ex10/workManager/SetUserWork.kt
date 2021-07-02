@@ -24,9 +24,9 @@ class SetUserWork(context: Context, workerParams: WorkerParameters): Worker(cont
                 userToken = "token $userToken"
                 val jObject = JsonObject()
                 if (pretty != null) {
-                    jObject.addProperty("property_pretty_name", pretty)
+                    jObject.addProperty("pretty_name", pretty)
                 } else if (imageURL != null) {
-                    jObject.addProperty("property_image_url", imageURL)
+                    jObject.addProperty("image_url", imageURL)
                 }
 
                 val response: Response<UserResponse> = curServerInterface.editUser(userToken, jObject).execute()

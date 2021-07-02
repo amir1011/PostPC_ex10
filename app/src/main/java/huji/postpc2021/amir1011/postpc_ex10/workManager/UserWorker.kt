@@ -19,7 +19,7 @@ class UserWorker(context: Context, workerParams: WorkerParameters): Worker(conte
         var userToken = inputData.getString("token_key")
         return try {
             userToken = "token $userToken"
-            val response: Response<UserResponse> = curServerInterface.getUser(userToken).execute()
+            val response: Response<UserResponse> = curServerInterface.getUserInfo(userToken).execute()
             val user: UserResponse = response.body() ?: return Result.failure()
             val outputData = Data.Builder()
                 .putString("user_output_key", Gson().toJson(user))

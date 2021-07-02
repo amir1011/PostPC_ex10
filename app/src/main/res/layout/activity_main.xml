@@ -4,14 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#009688"
     tools:context=".MainActivity">
 
     <TextView
         android:id="@+id/userWelcome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="#FF9800"
         android:layout_marginTop="20dp"
-        android:textSize="20sp"
+        android:textSize="30sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/userImage" />
@@ -125,10 +127,22 @@
         android:layout_marginEnd="8dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="@string/USERNAME"
+        android:text=""
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+
+
+        android:background="@drawable/colored_rect_with_rounded_corners"
+        android:elevation="4dp"
+        android:hint="@string/enter_your_username"
+        android:maxLines="1"
+        android:paddingStart="8dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="8dp"
+
+        />
 
     <Button
         android:id="@+id/connect"
@@ -147,27 +161,37 @@
 
     <EditText
         android:id="@+id/new_name"
-        android:layout_width="wrap_content"
+        android:layout_width="230dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="70dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="@string/prettyName"
+        android:text=""
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/changeName"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+
+
+        android:background="@drawable/colored_rect_with_rounded_corners"
+        android:elevation="4dp"
+        android:hint="@string/enter_a_new_pretty_name"
+        android:maxLines="1"
+        android:paddingStart="8dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="8dp"/>
 
     <Button
         android:id="@+id/changeName"
-        android:layout_width="130dp"
+        android:layout_width="150dp"
         android:layout_height="60dp"
-        android:layout_marginRight="24dp"
+        android:layout_marginEnd="5dp"
         android:layout_marginBottom="16dp"
         android:text="@string/changeName"
         app:layout_constraintBottom_toBottomOf="parent"

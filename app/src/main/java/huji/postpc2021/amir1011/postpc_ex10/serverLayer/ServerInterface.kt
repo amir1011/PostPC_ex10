@@ -13,16 +13,16 @@ interface ServerInterface {
     fun connectivityCheck(): Call<UserResponse>
 
     @GET("/user/")
-    fun getUser(@Header("Authorization") token: String): Call<UserResponse>
+    fun getUserInfo(@Header("Authorization") token: String): Call<UserResponse>
 
-    @GET("users/{username}/token/")
+    @GET("/users/{username}/token/")
     fun getUsersToken(@Path("username") username: String): Call<TokenResponse>
 
     @Headers("Content-Type: application/json")
     @POST("/user/edit/")
     fun editUser(
-        @Header("Authorization") token: String,
-        @Body json: JsonObject
+            @Header("Authorization") token: String,
+            @Body json: JsonObject
     ): Call<UserResponse>
 
 

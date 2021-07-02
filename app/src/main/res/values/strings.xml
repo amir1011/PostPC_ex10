@@ -1,8 +1,10 @@
 <resources>
     <string name="applicationName">PostPC_ex10</string>
-    <string name="changeName">Change Name</string>
+    <string name="changeName">Change Pretty Name</string>
     <string name="prettyName">Set Pretty Name!</string>
     <string name="connect">Connect</string>
     <string name="USERNAME">username</string>
-    <string name="loading">Loading...</string>
+    <string name="loading">Loading…</string>
+    <string name="enter_your_username">Enter your Username…</string>
+    <string name="enter_a_new_pretty_name">Enter a new pretty name…</string>
 </resources>

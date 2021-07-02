@@ -94,7 +94,7 @@ class MainActivity : AppCompatActivity() {
                         val curTokenJson = workInfo.outputData
                             .getString("user_output_token_key")
 
-                        Log.d("ex10TagToken", "got user: $curTokenJson")
+//                        Log.d("ex10TagToken", "got user: $curTokenJson")
 
                         if (curTokenJson == null || curTokenJson == "") return@observe
 
@@ -119,9 +119,9 @@ class MainActivity : AppCompatActivity() {
                         if (curResponseJson == null || curResponseJson == "") return@observe
                         val curResponse = Gson()
                             .fromJson(curResponseJson, UserResponse::class.java)
-                        Log.d("ex10Tag", "got user: $curResponseJson")
+//                        Log.d("ex10Tag", "got user: $curResponseJson")
                         if (curResponse == null || curResponse.data == null) return@observe
-                        Log.d("ex10Tag", "got user: $curResponse")
+//                        Log.d("ex10Tag", "got user: $curResponse")
                         changeLoading(false)
                         showUserInfo(curResponse.data)
                     }
@@ -176,13 +176,16 @@ class MainActivity : AppCompatActivity() {
             connectButton!!.visibility = View.GONE
             changeLoading(true)
             doOneTimeWorkRequest(Actions.GetUser, null)
+//            getUser()
         }
 
         connectButton!!.setOnClickListener {
             doOneTimeWorkRequest(Actions.GetUserToken, username!!.text.toString())
+//            getUserToken(username!!.text.toString())
         }
         changePretty!!.setOnClickListener {
            doOneTimeWorkRequest(Actions.UpdateUser, prettyName!!.text.toString())
+//           updateUser(prettyName!!.text.toString())
         }
 
     }
@@ -200,11 +203,12 @@ class MainActivity : AppCompatActivity() {
     private fun showUserInfo(user: User) {
         val curName: String? =
             if (user.getPrettyName() == null || user.getPrettyName().equals(""))
-                user.getUsername()
+                user.getusername()
             else user.getPrettyName()
 
-        if (curName != null) welcomeText!!.text = "Welcome Back:\n$curName"
+        if (curName != null) welcomeText!!.text = "Welcome Back Dear, \n$curName !"
         else welcomeText!!.text = ""
+        prettyName!!.text = ""
 
         welcomeText!!.visibility = View.VISIBLE
         prettyName!!.visibility = View.VISIBLE
@@ -230,26 +234,32 @@ class MainActivity : AppCompatActivity() {
         findViewById<View>(R.id.image_alien).setOnClickListener {
             showImagesAccordingToCurUser(R.id.image_alien)
             doOneTimeWorkRequest(Actions.UpdateImage, imagePath.format("alien"))
+//            updateImageUrl(imagePath.format("alien"))
         }
         findViewById<View>(R.id.image_frog).setOnClickListener {
             showImagesAccordingToCurUser(R.id.image_frog)
             doOneTimeWorkRequest(Actions.UpdateImage, imagePath.format("frog"))
+//            updateImageUrl(imagePath.format("frog"))
         }
         findViewById<View>(R.id.image_unicorn).setOnClickListener {
             showImagesAccordingToCurUser(R.id.image_unicorn)
             doOneTimeWorkRequest(Actions.UpdateImage, imagePath.format("unicorn"))
+//            updateImageUrl(imagePath.format("unicorn"))
         }
         findViewById<View>(R.id.image_robot).setOnClickListener {
             showImagesAccordingToCurUser(R.id.image_robot)
             doOneTimeWorkRequest(Actions.UpdateImage, imagePath.format("robot"))
+//            updateImageUrl(imagePath.format("robot"))
         }
         findViewById<View>(R.id.image_crab).setOnClickListener {
             showImagesAccordingToCurUser(R.id.image_crab)
             doOneTimeWorkRequest(Actions.UpdateImage, imagePath.format("crab"))
+//            updateImageUrl(imagePath.format("crab"))
         }
         findViewById<View>(R.id.image_octopus).setOnClickListener {
             showImagesAccordingToCurUser(R.id.image_octopus)
             doOneTimeWorkRequest(Actions.UpdateImage, imagePath.format("octopus"))
+//            updateImageUrl(imagePath.format("octopus"))
         }
     }
 
@@ -352,7 +362,7 @@ class MainActivity : AppCompatActivity() {
 //                    showUserInfo(user)
 //                })
 //    }
-
+//
 //    private fun getUser() {
 //        val workTagUniqueId = UUID.randomUUID()
 //        val getUserWork = OneTimeWorkRequest.Builder(UserWorker::class.java)

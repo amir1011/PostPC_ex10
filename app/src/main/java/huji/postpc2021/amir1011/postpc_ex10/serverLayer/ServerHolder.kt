@@ -1,11 +1,12 @@
 package huji.postpc2021.amir1011.postpc_ex10.serverLayer
 
+import android.app.Application
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class ServerHolder {
+class ServerHolder: Application() {
 
     companion object{
         private val okHttpClient: OkHttpClient by lazy {
